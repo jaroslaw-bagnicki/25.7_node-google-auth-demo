@@ -11,25 +11,23 @@ const app = express();
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
-// let googleProfile;
-
 passport.use(new GoogleStrategy({
   clientID: config.GOOGLE_AUTH.CLIENT_ID,
   clientSecret: config.GOOGLE_AUTH.CLIENT_KEY,
   callbackURL: config.GOOGLE_AUTH.CB_URL
-}, (accessToken, refreshToken, profile, cb) => {
-  // googleProfile = {
-  //   id: profile.id,
-  //   displayName: profile.displayName
-  // };
-  cb(null, profile);
-}
+}, (accessToken, refreshToken, profile, cb) => cb(null, profile)
 ));
 
 app.use(cookieParser());
 app.use(session({
   secret: 'secret',
   name: 'google-auth-demo',
+  cookie: {
+    path: '/', 
+    httpOnly: true, 
+    secure: false, 
+    maxAge: 60000 // 1 minute
+  },
   resave: false,
   saveUninitialized: true
 }));
@@ -54,13 +52,12 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 
 app.get('/logged', (req, res) => {
   logg(req);
-  res.render('logged', {user: req.isAuthenticated ? req.session.passport.user : null});
+  res.render('logged', {user: req.isAuthenticated() ? req.session.passport.user : null});
 });
 
 app.get('/logout', (req, res) => {
   logg(req);
   req.logout();
-  // res.clearCookie('connect.sid', { path: '/' });
   console.log('-- After logout -- '.red);
   logg(req);
   res.redirect('/');
@@ -79,5 +76,4 @@ function logg(req) {
   console.log('Cookies'.magenta, req.cookies);
   console.log('Session'.magenta, req.session);
   console.log('isAuthenticated'.magenta, req.isAuthenticated());
-  // console.log('googleProfile'.magenta, googleProfile);
 }
