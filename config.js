@@ -4,4 +4,4 @@ module.exports.GOOGLE_AUTH = {
   CB_URL: 'http://localhost:8080/auth/google/callback'
 };
 
-module.exports_PORT = 8080;
+module.exports.PORT = 8080;

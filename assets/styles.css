@@ -1,0 +1,28 @@
+body.red {
+  background-color: hsl(6, 78%, 92%);
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.link {
+  display: inline-block;
+  padding: 5px 10px;
+  margin: 5px;
+  background-color: rgba(192, 57, 43, .15);
+  border-radius: 3px;
+  color: #c0392b;
+  text-decoration-color: transparent;
+  transition: .3s;
+}
+
+.link:hover {
+  background-color: rgba(192, 57, 43, .25);
+  text-decoration-color: inherit;
+}
+
+.red {
+  color: #c0392b;
+}

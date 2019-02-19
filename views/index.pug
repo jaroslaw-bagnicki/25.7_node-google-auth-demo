@@ -1,8 +1,11 @@
-doctype htmlrs
+doctype html
 html(lang='en')
   head
     meta(charset='UTF-8')
     link(rel='stylesheet', href='/styles.css')
     title Sample Google Auth
   body
-    h1 Hello World!
+    div.container
+      h1 Hello User!
+      h3 Please authorize with Google account
+      a.link(href='/auth/google') Login &rarr;
